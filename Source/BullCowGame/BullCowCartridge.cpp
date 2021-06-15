@@ -8,32 +8,31 @@ void UBullCowCartridge::BeginPlay() // When the game starts
     SetupGame();
 
     PrintLine((TEXT("The HiddenWord is: %s."), *HiddenWord));  // Debug Line
-
-    // Welcoming the player
-    PrintLine(TEXT("Welcome to Bull Cows!"));
-    PrintLine(TEXT("Guess the %i letter word!"), HiddenWord.Len()); // Magic Number Remove
-    PrintLine(TEXT("Type in your guess and press enter to continue..."));
-
-    // Prompt player for guess
 }
 
 void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
 {
-    ClearScreen();
-
-    // Checking PlayerGuess
-
-    if (Input == HiddenWord)
+    // else 
+    if (bGameOver)
     {
-        PrintLine(TEXT("You have Won!"));
+        ClearScreen();
+        SetupGame();
     }
-    else
+    else   // Checking PlayerGuess
     {
-        if (Input.Len() != HiddenWord.Len())
+        if (Input == HiddenWord)
         {
-            PrintLine(TEXT("The Hidden Word is %i Characters long, try again!"), HiddenWord.Len());    // Magic Number
+            PrintLine(TEXT("You have Won!"));
+            EndGame();
         }
-        PrintLine(TEXT("You have Lost!"));
+        else
+        {
+            if (Input.Len() != HiddenWord.Len())
+            {
+                PrintLine(TEXT("The Hidden Word is %i Characters long. \nYou have lost!"), HiddenWord.Len());    // Magic Number
+                EndGame();
+            }
+        }
     }
     
     // Check if Isogram
@@ -54,6 +53,19 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
 
 void UBullCowCartridge::SetupGame()
 {
-    HiddenWord = TEXT("cake");
+    // Welcoming the player
+    PrintLine(TEXT("Welcome to Bull Cows!"));
+    
+    HiddenWord = TEXT("cakes");
     Lives = 4;
+    bGameOver = false;
+    
+    PrintLine(TEXT("Guess the %i letter word!"), HiddenWord.Len()); // Magic Number Remove
+    PrintLine(TEXT("Type in your guess. /npress enter to continue..."));   // Prompt player for guess
+}
+
+void UBullCowCartridge::EndGame()
+{
+    bGameOver = true;
+    PrintLine(TEXT("Press enter to play again."));
 }
