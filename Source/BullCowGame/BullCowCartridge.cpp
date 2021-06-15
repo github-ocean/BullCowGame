@@ -5,12 +5,14 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 {
     Super::BeginPlay();
 
+    SetupGame();
+
+    PrintLine((TEXT("The HiddenWord is: %s."), *HiddenWord));  // Debug Line
+
     // Welcoming the player
     PrintLine(TEXT("Welcome to Bull Cows!"));
-    PrintLine(TEXT("Guess the 4 letter word!")); // Magic Number Remove
-    PrintLine(TEXT("Press enter to continue..."));
-
-    SetupGame();// Setting up game
+    PrintLine(TEXT("Guess the %i letter word!"), HiddenWord.Len()); // Magic Number Remove
+    PrintLine(TEXT("Type in your guess and press enter to continue..."));
 
     // Prompt player for guess
 }
@@ -29,7 +31,7 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
     {
         if (Input.Len() != HiddenWord.Len())
         {
-            PrintLine(TEXT("The Hidden Word is 4 Characters long, try again!"));
+            PrintLine(TEXT("The Hidden Word is %i Characters long, try again!"), HiddenWord.Len());    // Magic Number
         }
         PrintLine(TEXT("You have Lost!"));
     }
