@@ -27,7 +27,6 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
         }
         else
         {
-            --Lives;
             PrintLine(TEXT("Loat a life!"));
             PrintLine(TEXT("%i"), --Lives);
             if (Lives > 0)
@@ -72,7 +71,7 @@ void UBullCowCartridge::SetupGame()
     
     PrintLine(TEXT("Guess the %i letter word!"), HiddenWord.Len());
     PrintLine(TEXT("You have %i lives."), Lives);
-    PrintLine(TEXT("Type in your guess and /npress enter to continue..."));   // Prompt player for guess
+    PrintLine(TEXT("Type in your guess and \npress enter to continue..."));   // Prompt player for guess
 }
 
 void UBullCowCartridge::EndGame()
