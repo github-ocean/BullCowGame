@@ -20,44 +20,11 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
     }
     else   // Checking PlayerGuess
     {
-        if (Input == HiddenWord)
-        {
-            PrintLine(TEXT("You have Won!"));
-            EndGame();
-        }
-        else
-        {
-            PrintLine(TEXT("Loat a life!"));
-            PrintLine(TEXT("%i"), --Lives);
-            if (Lives > 0)
-            {
-                if (Input.Len() != HiddenWord.Len())
-                {
-                    PrintLine(TEXT("Sorry, try guessing again! \nYou have %i lives remaining."), Lives);
-                }
-            }
-            else
-            {
-                PrintLine(TEXT("You have no lives left!"));
-                EndGame();
-            }
-        }
+        ProcessGuess(Input);
+        
     }
     
-    // Check if Isogram
-    // Prompt to guess again
-    // Check Right Number of character
-    // Prompt to guess again
     
-    // Remove Life
-
-    // Check if Lives > 0
-    // If Yes GuessAgain
-    // Show Lives Left
-    // If No show GameOver and HiddenWord?
-    // Prompt to play again, Press Enter to play again?
-    // Check user input
-    // PlayAgain or Quit
 }
 
 void UBullCowCartridge::SetupGame()
@@ -78,4 +45,50 @@ void UBullCowCartridge::EndGame()
 {
     bGameOver = true;
     PrintLine(TEXT("Press enter to play again."));
+}
+
+void UBullCowCartridge::ProcessGuess(FString Guess)
+{
+    if (Guess == HiddenWord)
+    {
+        PrintLine(TEXT("You have Won!"));
+        EndGame();
+        return;
+    }
+
+    // Check if Isogram
+    // Prompt to guess again
+    // Check Right Number of character
+    if (Guess.Len() != HiddenWord.Len())
+    {
+        PrintLine(TEXT("Sorry, try guessing again! \nYou have %i lives remaining."), Lives);
+        PrintLine(TEXT("The Hedden Word is %i letter long"), HiddenWord.Len());
+        return;
+    }
+    // Prompt to guess again
+
+    // Remove Life
+
+    // Check if Lives > 0
+    // If Yes GuessAgain
+    // Show Lives Left
+    // If No show GameOver and HiddenWord?
+    // Prompt to play again, Press Enter to play again?
+    // Check user input
+    // PlayAgain or Quit
+
+    else
+    {
+        PrintLine(TEXT("Loat a life!"));
+        PrintLine(TEXT("%i"), --Lives);
+        if (Lives > 0)
+        {
+            
+        }
+        else
+        {
+            PrintLine(TEXT("You have no lives left!"));
+            EndGame();
+        }
+    }
 }
